@@ -1,155 +1,60 @@
-<p align="center">
-  <a href="https://www.medusa-commerce.com">
-    <img alt="Medusa" src="https://i.imgur.com/USubGVY.png" width="100" />
-  </a>
-</p>
-<h1 align="center">
-  Medusa Starter Default
-</h1>
-<p align="center">
-This repo provides the skeleton to get you started with using <a href="https://github.com/medusajs/medusa">Medusa</a>. Follow the steps below to get ready.
-</p>
-<p align="center">
-  <a href="https://github.com/medusajs/medusa/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Medusa is released under the MIT license." />
-  </a>
-  <a href="https://github.com/medusajs/medusa/blob/master/CONTRIBUTING.md">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs welcome!" />
-  </a>
-  <a href="https://discord.gg/xpCwq3Kfn8">
-    <img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg" alt="Discord Chat" />
-  </a>
-  <a href="https://twitter.com/intent/follow?screen_name=medusajs">
-    <img src="https://img.shields.io/twitter/follow/medusajs.svg?label=Follow%20@medusajs" alt="Follow @medusajs" />
-  </a>
-  <p align="center">
-    <a href="https://heroku.com/deploy?template=https://github.com/medusajs/medusa-starter-default/tree/feat/deploy-heroku">
-      <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
-    </a>
-  </p>
-</p>
+# Medusa Hackathon 2022 - Medusa Summary Plugin
 
-## Prerequisites
+![Medusa Hackathon 2022](https://i.imgur.com/CndOHt2.jpg)
 
-This starter has minimal prerequisites and most of these will usually already be installed on your computer.
+## About
 
-- [Install Node.js](https://nodejs.org/en/download/)
-- [Install git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [Install SQLite](https://www.sqlite.org/download.html)
+### Participants
+[Github](https://github.com/Ikkevoid),
+[Twitter](https://twitter.com/Ikkevoid),
+Discord: ikke#3486
 
-## Setting up your store
+### Description
 
-- Install the Medusa CLI
-  ```
-  npm install -g @medusajs/medusa
-  yarn global add @medusajs/medusa
-  ```
-- Create a new Medusa project
-  ```
-  medusa new my-medusa-store
-  ```
-- Run your project
-  ```
-  cd my-medusa-store
-  medusa develop
-  ```
+Really simple medusa plugin that gives summary of different stats
 
-Your local Medusa server is now running on port **9000**.
+### Preview / Suggested use in Medusa Admin
 
-### Seeding your Medusa store
+![Preview / Suggested use in Medusa Admin](https://i.imgur.com/2fXGMx9.png)
 
----
+### Roadmap
 
-To seed your medusa store run the following command:
+Since it's my first experience with backend, I know that how I made this plugin is probably wrong, so I plan to learn Express.js and TypeORM, then refactor the code, implement the new features. Here's what I have in mind:
 
-```
-medusa seed -f ./data/seed.json
-```
+- [ ] Refactor
+- [ ] Add more statistic types
+  - [ ] Most common products in discarded carts
+  - [ ] Top sold products
+  - [ ] Top sold product groups (Pair or more)
+  - [ ] Most used fulfilment and payment methods
+  - [ ] Daily/monthly/yearly sale stats
 
-This command seeds your database with some sample data to get you started, including a store, an administrator account, a region and a product with variants. What the data looks like precisely you can see in the `./data/seed.json` file.
+## Set up Project
 
-## Setting up your store with Docker
+### Prerequisites
 
-- Install the Medusa CLI
-  ```
-  npm install -g @medusajs/medusa-cli
-  ```
-- Create a new Medusa project
-  ```
-  medusa new my-medusa-store
-  ```
-- Update project config in `medusa-config.js`:
+- Medusa Server (Link to [Quickstart](https://docs.medusajs.com/quickstart/quick-start) here).
 
-  ```
-  module.exports = {
-    projectConfig: {
-      redis_url: REDIS_URL,
-      database_url: DATABASE_URL, //postgres connectionstring
-      database_type: "postgres",
-      store_cors: STORE_CORS,
-      admin_cors: ADMIN_CORS,
-    },
-    plugins,
-  };
-  ```
+### Installation steps
 
-- Run your project
+1. Install the plugin:
+    ```bash
+    npm install medusa-summary-plugin
+    ``` 
+    or
+    ```bash
+    yarn add medusa-summary-plugin
+    ```
+2. Add the plugin to your `medusa-config.js` file:
+    ```js
+    {
+      resolve: `medusa-summary-plugin`
+    }
+    ```
 
-  When running your project the first time `docker compose` should be run with the `build` flag to build your container locally:
+## Resources
 
-  ```
-  docker-compose up --build
-  ```
+- [Medusa Hackathon 2022](https://medusajs.com/blog/medusa-hackathon)
+- [Medusa’s GitHub repository](https://github.com/medusajs/medusa)
+- [Medusa Documentation](https://docs.medusajs.com/)
 
-  When running your project subsequent times you can run docker compose with no flags to spin up your local environment in seconds:
-
-  ```
-  docker-compose up
-  ```
-
-Your local Medusa server is now running on port **9000**.
-
-### Seeding your Medusa store with Docker
-
----
-
-To add seed data to your medusa store running with Docker, run this command in a seperate terminal:
-
-```
-docker exec medusa-server medusa seed -f ./data/seed.json
-```
-
-This will execute the previously described seed script in the running `medusa-server` Docker container.
-
-## Try it out
-
-```
-curl -X GET localhost:9000/store/products | python -m json.tool
-```
-
-After the seed script has run you will have the following things in you database:
-
-- a User with the email: admin@medusa-test.com and password: supersecret
-- a Region called Default Region with the countries GB, DE, DK, SE, FR, ES, IT
-- a Shipping Option called Standard Shipping which costs 10 EUR
-- a Product called Cool Test Product with 4 Product Variants that all cost 19.50 EUR
-
-Visit [docs.medusa-commerce.com](https://docs.medusa-commerce.com) for further guides.
-
-<p>
-  <a href="https://www.medusa-commerce.com">
-    Website
-  </a> 
-  |
-  <a href="https://medusajs.notion.site/medusajs/Medusa-Home-3485f8605d834a07949b17d1a9f7eafd">
-    Notion Home
-  </a>
-  |
-  <a href="https://twitter.com/intent/follow?screen_name=medusajs">
-    Twitter
-  </a>
-  |
-  <a href="https://docs.medusa-commerce.com">
-    Docs
-  </a>
-</p>
